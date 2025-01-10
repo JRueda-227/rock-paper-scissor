@@ -21,7 +21,7 @@ function playRound(humanChoice, compChoice) {
         compScore++;
     }
     else if (humanChoice === 'rock' && compChoice === 'scissor') {
-        console.log('You win! Rock beats Paper');
+        console.log('You win! Rock beats Scissor');
         humanScore++;
     }
     else if (humanChoice === 'paper' && compChoice === 'scissor') {
@@ -44,26 +44,20 @@ function playRound(humanChoice, compChoice) {
         console.log('Tie!')
     }
 }
+let weapons = document.querySelector('.weapons');
 
-function playGame() {
+weapons.addEventListener('click', (event) => {
     humanScore = 0;
     compScore = 0;
 
-    for (i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const compSelection = getComputerChoice();
+    const playerSelection = event.target.textContent;
+    const compSelection = getComputerChoice();
 
-        playRound(humanSelection, compSelection);
-    }
+    playRound(playerSelection, compSelection);
 
-    if (humanScore > compScore) {
-        console.log('You win the game');
-    }
-    else if (humanScore < compScore) {
-        console.log('You lose the game');
-    }
-    else {
-        console.log('Game tied!')
-    }
-}
+    console.log(playerSelection);
+    console.log(compSelection);
+});
+
+const scoreBoard = document.createElement('div');
 
