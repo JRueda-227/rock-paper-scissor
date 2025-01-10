@@ -1,5 +1,6 @@
-let humanScore;
-let compScore;
+let playerScore = 0;
+let compScore = 0;
+let output;
 
 function getComputerChoice() {
     const choices = ['rock', 'paper', 'scissor'];
@@ -8,56 +9,82 @@ function getComputerChoice() {
     return compChoice;
 }
 
-function getHumanChoice() {
-    const humanChoice = prompt('Choose your weapon.')
-    return humanChoice;
-}
+function playRound(playerChoice, compChoice) {
+    playerChoice = playerChoice.toLowerCase();
 
-function playRound(humanChoice, compChoice) {
-    humanChoice = humanChoice.toLowerCase();
-
-    if (humanChoice === 'rock' && compChoice === 'paper') {
-        console.log('You lose! Paper beats Rock');
+    if (playerChoice === 'rock' && compChoice === 'paper') {
+        output = 'You lose! Paper beats Rock';
         compScore++;
     }
-    else if (humanChoice === 'rock' && compChoice === 'scissor') {
-        console.log('You win! Rock beats Scissor');
-        humanScore++;
+    else if (playerChoice === 'rock' && compChoice === 'scissor') {
+        output = 'You win! Rock beats Scissor';
+        playerScore++;
     }
-    else if (humanChoice === 'paper' && compChoice === 'scissor') {
-        console.log('You lose! Scissor beats Paper');
+    else if (playerChoice === 'paper' && compChoice === 'scissor') {
+        output = 'You lose! Scissor beats Paper';
         compScore++;
     }
-    else if (humanChoice === 'paper' && compChoice === 'rock') {
-        console.log('You win! Paper beats Rock');
-        humanScore++;
+    else if (playerChoice === 'paper' && compChoice === 'rock') {
+        output = 'You win! Paper beats Rock';
+        playerScore++;
     }
-    else if (humanChoice === 'scissor' && compChoice === 'rock') {
-        console.log('You lose! Rock beats Scissor');
+    else if (playerChoice === 'scissor' && compChoice === 'rock') {
+        output = 'You lose! Rock beats Scissor';
         compScore++;
     }
-    else if (humanChoice === 'scissor' && compChoice === 'paper') {
-        console.log('You win! Scissor beats Paper');
-        humanScore++;
+    else if (playerChoice === 'scissor' && compChoice === 'paper') {
+        output = 'You win! Scissor beats Paper';
+        playerScore++;
     }
     else {
-        console.log('Tie!')
+        output = ('Tie!')
     }
 }
-let weapons = document.querySelector('.weapons');
 
-weapons.addEventListener('click', (event) => {
-    humanScore = 0;
+function resetGame() {
+    playerScore = 0;
     compScore = 0;
 
+}
+
+function checkWinner() {
+    let winner;
+    if (playerScore === 5) {
+        winner = 'Player Wins Game';
+        gameCommentary.textContent = winner;
+        resetGame();
+    }
+    else if (compScore === 5) {
+        winner = 'Computer Wins Game';
+        gameCommentary.textContent = winner;
+        resetGame();
+    }
+}
+
+let weapons = document.querySelector('.weapons');
+const scoreBoard = document.querySelector('.score-board');
+
+const playerScoreDisplay = document.createElement('div');
+const compScoreDisplay = document.createElement('div');
+const gameCommentary = document.createElement('div');
+
+weapons.addEventListener('click', (event) => {
     const playerSelection = event.target.textContent;
     const compSelection = getComputerChoice();
 
     playRound(playerSelection, compSelection);
 
-    console.log(playerSelection);
-    console.log(compSelection);
+    playerScoreDisplay.textContent = playerScore;
+    scoreBoard.appendChild(playerScoreDisplay);
+
+    compScoreDisplay.textContent = compScore;
+    scoreBoard.appendChild(compScoreDisplay);
+
+    gameCommentary.textContent = output;
+    scoreBoard.appendChild(gameCommentary);
+
+    checkWinner();
 });
 
-const scoreBoard = document.createElement('div');
+
 
